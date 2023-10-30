@@ -45,4 +45,5 @@ Riippuvuuksien hallintaan käytetään Poetryä. Algoritmin oikea toiminta varmi
 ## Lähteet
 
 [Wikipedia: Reverse Polish notation](https://en.wikipedia.org/wiki/Reverse_Polish_notation)
+
 [Wikipedia: Shunting yard algorithm](https://en.wikipedia.org/wiki/Shunting_yard_algorithm)

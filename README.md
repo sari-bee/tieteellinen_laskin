@@ -8,7 +8,7 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin
 
 ## Viikkoraportit
 
-[Viikko 1](https://github.com/sari-bee/tieteellinen_laskin/blob/main/viikkoraportit/viikko1.md)
+[Viikko 1](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko1.md)
 
 ## Asennus ja käynnistys
 
