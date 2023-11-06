@@ -7,6 +7,8 @@ authors = ["Sari Bäckman <sari.m.backman@gmail.com>"]
 [tool.poetry.dependencies]
 python = "^3.10"
 pytest = "^7.4.3"
+coverage = "^7.3.2"
+pylint = "^3.0.2"
 
 [tool.poetry.dev-dependencies]
 

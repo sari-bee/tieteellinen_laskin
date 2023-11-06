@@ -9,6 +9,7 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin
 ## Viikkoraportit
 
 [Viikko 1](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko1.md)
+[Viikko 2](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko2.md)
 
 ## Asennus ja käynnistys
 
@@ -30,3 +31,15 @@ Suorita testit komennolla
 poetry run pytest src
 ```
 
+Aja testikattavuusraportti komennoilla
+
+```bash
+poetry run coverage run --branch -m pytest src
+poetry run coverage report -m
+```
+
+Tee Pylint-tarkastukset komennolla
+
+```bash
+poetry run pylint src
+```
