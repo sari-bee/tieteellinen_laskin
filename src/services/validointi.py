@@ -12,8 +12,10 @@ class Validointi:
     @classmethod
     def lausekkeesta_jono(cls, lauseke):
         # tarkistetaan että lausekkeen alussa ja lopussa ei ole kiellettyjä merkkejä
-        if lauseke[0] in (oper, ")", ".", ",") or lauseke[-1] in (oper, "(", ".", ",","-"):
-            return "Syötteen alussa tai lopussa on virheellinen merkki, tarkista syöte"
+        if lauseke[0] in oper or lauseke[0] in (")", ".", ","):
+            return "Syötteen alussa on virheellinen merkki, tarkista syöte"
+        if lauseke[-1] in oper or lauseke[-1] in ("(", ".", ",","-"):
+            return "Syötteen lopussa on virheellinen merkki, tarkista syöte"
         lausekejono = deque()
         i = 0
         numero = ""
@@ -39,6 +41,7 @@ class Validointi:
                 if lauseke[i] == "-":
                     if edellinen in oper or edellinen == "-" or edellinen == "(":
                         numero = "-"
+                        numero_kesken = True
                     else:
                         # jos törmätään operaattoriin, päätellään että edellinen numero päättyi
                         if len(numero) != 0:
