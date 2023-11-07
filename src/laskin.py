@@ -26,3 +26,4 @@ class Laskin:
             return False
         rpn = ShuntingYard.rpn_muotoon(lausekejono)
         return rpn
+        
