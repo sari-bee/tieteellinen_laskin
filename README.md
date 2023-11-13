@@ -2,6 +2,7 @@
 
 Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin.
 
+[![codecov](https://codecov.io/gh/sari-bee/tieteellinen_laskin/graph/badge.svg?token=EP3JOCDFUW)](https://codecov.io/gh/sari-bee/tieteellinen_laskin)
 ![CI](https://github.com/sari-bee/tieteellinen_laskin/workflows/CI/badge.svg)
 
 ## Dokumentaatio
