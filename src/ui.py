@@ -1,9 +1,13 @@
 import sys
 from laskin import Laskin
 
+muutt = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
 # käyttöliittymä/sovellusvalikko
 class Ui:
     def __init__(self):
+        # muuttujat alustetaan aina sovelluksen käynnistyessä
         self.muuttujat = {}
 
     def suorita(self):
@@ -30,16 +34,33 @@ class Ui:
                 print("-\nValinta virheellinen, kokeile uudestaan\n-")
 
     def laske(self):
+        self.kaytossa_olevat_muuttujat()
         while True:
-            syote = input("\nAnna laskutoimitus tai palaa valikkoon painamalla '!'\n")
+            syote = input("\nAnna laskutoimitus tai palaa päävalikkoon painamalla !\n")
             if syote == "!":
                 print("\n")
                 break
             if syote not in (" ", ""):
-                tulos = Laskin.laske_tulos(syote)
+                tulos = Laskin.laske_tulos(syote, self.muuttujat)
                 if tulos:
                     print(syote + " = " + str(tulos) + "\n")
+                    t = input("\nTallenna tulos antamalla muuttuja A-Z (ohita painamalla enter)\n")
+                    if t in muutt:
+                        self.muuttuja(t, tulos)
         self.valikko()
+
+    def muuttuja(self, muuttuja, tulos):
+        self.muuttujat = Laskin.tallenna_muuttujaan(muuttuja, tulos, self.muuttujat)
+        print("Talletettiin tulos muuttujaan " + muuttuja)
+        self.laske()
+
+    def kaytossa_olevat_muuttujat(self):
+        if len(self.muuttujat) == 0:
+            print("\nEi toistaiseksi muuttujia varattuna.")
+        else:
+            print("\nKäytössä olevat muuttujat:")
+            for key in self.muuttujat:
+                print(key + " = " + self.muuttujat[key])
 
     def muunna(self):
         while True:
@@ -48,7 +69,7 @@ class Ui:
                 print("\n")
                 break
             if syote not in (" ", ""):
-                rpn = Laskin.muunna_rpn_muotoon(syote)
+                rpn = Laskin.muunna_rpn_muotoon(syote, self.muuttujat)
                 if rpn:
                     tulos = ""
                     i = 0

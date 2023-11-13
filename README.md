@@ -2,15 +2,21 @@
 
 Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin.
 
+![CI](https://github.com/sari-bee/tieteellinen_laskin/workflows/CI/badge.svg)
+
 ## Dokumentaatio
 
 [Vaatimusmäärittely](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/vaatimusmaarittely.md)
+
+[Testausraportti](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/testausraportti.md)
 
 ## Viikkoraportit
 
 [Viikko 1](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko1.md)
 
 [Viikko 2](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko2.md)
+
+[Viikko 3](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko3.md)
 
 ## Asennus ja käynnistys
 

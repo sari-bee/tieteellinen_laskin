@@ -1,6 +1,6 @@
 from collections import deque
 
-operaattorit = ["+","-","*","/"]
+operaattorit = ["+","-","*","/","^"]
 
 class RPNEvaluointi:
 
@@ -15,17 +15,28 @@ class RPNEvaluointi:
                 # numerot pinossa käänteisessä järjestyksessä
                 eka = float(numeropino.pop())
                 toka = float(numeropino.pop())
-                if merkki == "+":
-                    tulos = toka+eka
-                elif merkki == "-":
-                    tulos = toka-eka
-                elif merkki == "*":
-                    tulos = toka*eka
+                tulos = RPNEvaluointi.tulos_laskusta(merkki, eka, toka)
+                if tulos:
+                    numeropino.append(tulos)
                 else:
-                    if eka == 0:
-                        return "Yrität jakaa nollalla, yritätkö räjäyttää maailmankaikkeuden?"
-                    tulos = toka/eka
-                numeropino.append(tulos)
+                    return False
             else:
                 numeropino.append(merkki)
         return numeropino.pop()
+
+    @classmethod
+    def tulos_laskusta(cls,merkki,eka,toka):
+        if merkki == "+":
+            tulos = toka+eka
+        elif merkki == "-":
+            tulos = toka-eka
+        elif merkki == "*":
+            tulos = toka*eka
+        elif merkki == "^":
+            tulos = toka**eka
+        else:
+            if eka == 0:
+                print("Yrität jakaa nollalla, yritätkö räjäyttää maailmankaikkeuden?")
+                return False
+            tulos = toka/eka
+        return tulos

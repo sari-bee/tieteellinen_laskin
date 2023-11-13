@@ -13,3 +13,7 @@ class TestShuntingYard(unittest.TestCase):
     def test_kertojako(self):
         tulos = ShuntingYard.rpn_muotoon(deque(['3', '*', '5', '/', '7.5']))
         self.assertEqual(deque(['3', '5', '*', '7.5', '/']), tulos)
+
+    def test_potenssi(self):
+        tulos = ShuntingYard.rpn_muotoon(deque(['3', '+', '5', '^', '2', '*', '2']))
+        self.assertEqual(deque(['3', '5', '2', '^', '2', '*', '+']), tulos)
