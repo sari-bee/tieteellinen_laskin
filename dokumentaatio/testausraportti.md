@@ -9,7 +9,7 @@ Yksikkötestauksessa käytetään Unittest-kehystä. Automaattisilla testeillä 
 
 Automaattisia testejä on 32 kappaletta. Testien haarautumakattavuus on 99%.
 
-![Testikattavuus](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/testikattavuus_viikko3.jpg)
+![Testikattavuus](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/testikattavuus_vko3.jpg)
 
 Tavoitteena on 100% testauksen kokonaiskattavuus testattavien luokkien osalta ja lisäksi testien tulee testata toiminnallisuuksia mielekkäällä tavalla. Tällä hetkellä muutamat koodirivit jäävät automaattitestien ulkopuolelle. Niiden määrittelemät toiminnallisuudet on testattu manuaalisesti.
 
