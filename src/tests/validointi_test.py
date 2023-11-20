@@ -31,16 +31,16 @@ class TestValidointi(unittest.TestCase):
         self.assertEqual(deque(['-4','*','63','-','2']), tulos)
 
     def test_miinusmerkkinen_numero_keskella(self):
-        tulos = Validointi.lausekkeesta_jono("2 / -4 * 6 - 8",self.muuttujat)
+        tulos = Validointi.lausekkeesta_jono("2/-4*6-8",self.muuttujat)
         self.assertEqual(deque(['2', '/', '-4','*','6', '-', '8']), tulos)
 
     def test_neliojuuri(self):
         tulos = Validointi.lausekkeesta_jono("sqrt(64)",self.muuttujat)
-        self.assertEqual(deque(['64','^','0.5']), tulos)
+        self.assertEqual(deque(['(','64',')','^','(', '1', '/', '2', ')']), tulos)
 
     def test_neliojuuressa_kielletty_merkki(self):
         tulos = Validointi.lausekkeesta_jono("sr(64)",self.muuttujat)
-        self.assertEqual("Syötteessä on virheellisiä merkkejä, tarkista syöte", tulos)
+        self.assertEqual("Virheellinen syöte", tulos)
 
     def test_oikein_muodostettu_lausekejono(self):
         tulos = Validointi.lausekkeesta_jono("(2,5+42)x7%2",self.muuttujat)
@@ -68,5 +68,9 @@ class TestValidointi(unittest.TestCase):
 
     def test_sulkujen_jalkeen_ei_voi_alkaa_numero(self):
         tulos = Validointi.lausekkeesta_jono("4+(5/7)8)",self.muuttujat)
+        self.assertEqual(tulos,"Virheellinen syöte")
+
+    def test_liian_suuri_juuri_hylataan(self):
+        tulos = Validointi.lausekkeesta_jono("sq14(3)",self.muuttujat)
         self.assertEqual(tulos,"Virheellinen syöte")
  

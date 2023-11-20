@@ -14,6 +14,14 @@ class TestLaskin(unittest.TestCase):
         tulos = Laskin.laske_tulos("s(64)/2", self.muuttujat)
         self.assertEqual(4, tulos)
 
+    def test_sulkujen_sisalla_oleva_lauseke_oikein(self):
+        tulos = Laskin.laske_tulos("5*(1+2*4)", self.muuttujat)
+        self.assertEqual(45, tulos)
+
+    def test_tuplasulut_ymmarretaan_oikein(self):
+        tulos = Laskin.laske_tulos("2*(1+2*(1+3))",self.muuttujat)
+        self.assertEqual(18,tulos)
+
     def test_oikeanlainen_rpn(self):
         tulos = Laskin.muunna_rpn_muotoon("3+5*(1-3)", self.muuttujat)
         self.assertEqual(deque(['3', '5', '1', '3', '-', '*', '+']), tulos)
@@ -31,3 +39,7 @@ class TestLaskin(unittest.TestCase):
     def test_nollallajako(self):
         tulos = Laskin.laske_tulos("5/0", self.muuttujat)
         self.assertFalse(tulos)
+
+    def test_viiden_juuren_sisalla_lauseke(self):
+        tulos = Laskin.laske_tulos("sq5(200+2*21+1)", self.muuttujat)
+        self.assertEqual(3, tulos)

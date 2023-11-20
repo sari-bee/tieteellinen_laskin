@@ -4,20 +4,30 @@ numerot = ["0","1","2","3","4","5","6","7","8","9","."]
 operaattorit = ["+","-","*","/","^"]
 
 class ShuntingYard:
+    """Luokka tuottaa infix-muotoisesta matemaattisesta lausekkeesta postfix-muotoisen.
+    """
 
-    # funktio ottaa infix-notaatiossa olevan lausekkeen ja palauttaa sen postfix-muodon
     @classmethod
     def rpn_muotoon(cls, lausekejono):
+        """Muunnetaan infix-muotoinen lauseke postfix-muotoon.
+
+        Args:
+            lausekejono (Deque): Infix-muotoinen matemaattinen lauseke Deque-muodossa.
+
+        Returns:
+            Postfix-muotoinen lauseke Deque-muodossa tai False, jos lauseke ei ole validi.
+        """
+
         sulkuja_kesken = 0
         numerojono = deque()
         operaattoripino = deque()
         while len(lausekejono) > 0:
             merkki = lausekejono.popleft()
-            # aloitetaan sulkujen sisällä oleva lauseke
+            # Merkitään sulkujen sisällä oleva lauseke alkavaksi.
             if merkki == "(":
                 operaattoripino.append("(")
                 sulkuja_kesken = sulkuja_kesken + 1
-            # lisätään sulkujen sisällä oleva lauseke jonoon
+            # Lisätään koko sulkujen sisällä oleva lauseke jonoon.
             if merkki == ")":
                 while True:
                     edellinen = operaattoripino.pop()
@@ -25,23 +35,35 @@ class ShuntingYard:
                         break
                     numerojono.append(edellinen)
                 sulkuja_kesken = sulkuja_kesken - 1
-            # kaikki numerot lisätään suoraan jonoon
-            # pituusvaatimuksella huomioidaan tässä vaiheessa helpoiten myös miinusmerkkiset numerot
+            # Kaikki numerot lisätään suoraan jonoon.
+            # Pituusvaatimuksella huomioidaan negatiiviset numerot.
             if merkki in numerot or len(merkki) > 1:
                 numerojono.append(merkki)
             if merkki in operaattorit:
-                # suluissa olevien lausekkeiden käsittely kokonaisuutena
-                # suluissa olevien lausekkeiden presedenssijärjestystä ei nyt huomioida oikein,
-                # asia korjataan jatkossa
                 if sulkuja_kesken > 0:
+                    if merkki != "^":
+                        edellinen = operaattoripino.pop()
+                        if merkki in ("+","-"):
+                            while True:
+                                if edellinen == "(":
+                                    break
+                                numerojono.append(edellinen)
+                                edellinen = operaattoripino.pop()
+                        elif edellinen != "(":
+                            while True:
+                                if edellinen not in ("*","/","^"):
+                                    break
+                                numerojono.append(edellinen)
+                                edellinen = operaattoripino.pop()
+                        operaattoripino.append(edellinen)
                     operaattoripino.append(merkki)
                 else:
-                    # jos operaattori on + tai -, lisätään mahdolliset aiemmat operaattorit
-                    # jonoon ennen näitä koska näiden presedenssi on matalin
+                    # Jos operaattori on + tai -, lisätään mahdolliset aiemmat operaattorit
+                    # jonoon ennen näitä koska näiden presedenssi on matalin.
                     if merkki in ("+", "-"):
                         while len(operaattoripino) > 0:
                             numerojono.append(operaattoripino.pop())
-                    # jos operaattori on ^, * tai %, huomioidaan myös presedenssijärjestys
+                    # Jos operaattori on * tai %, vain ^ menee presedenssissä edelle.
                     elif merkki in ("*", "/"):
                         while len(operaattoripino) > 0:
                             edellinen = operaattoripino.pop()
@@ -53,7 +75,6 @@ class ShuntingYard:
                     operaattoripino.append(merkki)
         while len(operaattoripino) > 0:
             numerojono.append(operaattoripino.pop())
-        # sulkujen pitää päättyä jotta syöte olisi validi
         if sulkuja_kesken > 0:
             print("Virheellinen syöte")
             return False

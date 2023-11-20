@@ -17,3 +17,11 @@ class TestShuntingYard(unittest.TestCase):
     def test_potenssi(self):
         tulos = ShuntingYard.rpn_muotoon(deque(['3', '+', '5', '^', '2', '*', '2']))
         self.assertEqual(deque(['3', '5', '2', '^', '2', '*', '+']), tulos)
+
+    def test_sulkulauseke_plusmiinus(self):
+        tulos = ShuntingYard.rpn_muotoon(deque(['3', '*', '(', '1', '*', '2', '+', '4', ')']))
+        self.assertEqual(deque(['3', '1', '2', '*', '4', '+', '*']), tulos)
+        
+    def test_sulkulauseke_kertojako(self):
+        tulos = ShuntingYard.rpn_muotoon(deque(['3', '*', '(', '1', '*', '2', '/', '4', ')']))
+        self.assertEqual(deque(['3', '1', '2', '*', '4', '/', '*']), tulos)
