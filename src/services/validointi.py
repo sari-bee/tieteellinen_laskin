@@ -127,7 +127,7 @@ class Validointi:
             lauseke (String): Käsiteltävänä oleva käyttäjän syöte
 
         Returns:
-            Syöte String-muodossa niin, että juuret on muutettu potenssimerkinnöiksi.
+            Syöte Stringinä juuret muutettuna potenssimerkinnöiksi tai False jos syöte virheellinen.
         """
 
         i = 0
