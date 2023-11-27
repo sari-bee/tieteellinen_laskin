@@ -75,7 +75,4 @@ class ShuntingYard:
                     operaattoripino.append(merkki)
         while len(operaattoripino) > 0:
             numerojono.append(operaattoripino.pop())
-        if sulkuja_kesken > 0:
-            print("Virheellinen syöte")
-            return False
         return numerojono

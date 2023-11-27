@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "tieteellinen_laskin"
+name = "tieteellinen-laskin"
 version = "0.1.0"
 description = ""
 authors = ["Sari Bäckman <sari.m.backman@gmail.com>"]

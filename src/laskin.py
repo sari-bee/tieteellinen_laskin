@@ -21,12 +21,9 @@ class Laskin:
         lausekejono = Validointi.lausekkeesta_jono(lauseke, muuttujat)
         # Jos validointi on tuottanut String-muotoisen virheilmoituksen, tulostetaan se
         if isinstance(lausekejono, str):
-            print(lausekejono)
+            print(lauseke,"->",lausekejono)
             return False
-        rpn = ShuntingYard.rpn_muotoon(lausekejono)
-        if not rpn:
-            return False
-        return rpn
+        return ShuntingYard.rpn_muotoon(lausekejono)
 
     @classmethod
     def laske_tulos(cls, lauseke, muuttujat):
@@ -66,4 +63,28 @@ class Laskin:
 
         muuttujat[syote] = str(tulos)
         return muuttujat
+
+    @classmethod
+    def minimit_ja_maksimit(cls, lausekkeet, muuttujat):
+        """Laskee lausekejoukon minimi- ja maksimiarvot.
+
+        Args:
+            lausekkeet (List): Lista vertailtavia lausekkeita.
         
+        Returns:
+            Tuple, jossa minimi- ja maksimiarvot.
+        """
+        arvot = []
+        lausekearvoparit = {}
+        i = 0
+        while i < len(lausekkeet):
+            arvo = float(Laskin.laske_tulos(lausekkeet[i], muuttujat))
+            if arvo:
+                lausekearvoparit[arvo] = lausekkeet[i]
+                arvot.append(arvo)
+            i = i+1
+        if len(arvot) == 0:
+            return False
+        minimi = min(arvot)
+        maksimi = max(arvot)
+        return ((lausekearvoparit[minimi], minimi), (lausekearvoparit[maksimi], maksimi))

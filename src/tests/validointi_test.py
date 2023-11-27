@@ -16,7 +16,7 @@ class TestValidointi(unittest.TestCase):
 
     def test_kaksi_miinusta_alussa(self):
         tulos = Validointi.lausekkeesta_jono("--3+5",self.muuttujat)
-        self.assertEqual("Syötteen alussa virheellinen merkki, tarkista syöte", tulos)
+        self.assertEqual("Syötteen alussa tai lopussa on virheellinen merkki, tarkista syöte", tulos)
 
     def test_numero_valilyonti_numero(self):
         tulos = Validointi.lausekkeesta_jono("3 5 + 7",self.muuttujat)
@@ -25,6 +25,14 @@ class TestValidointi(unittest.TestCase):
     def test_operaattorit_perakkain(self):
         tulos = Validointi.lausekkeesta_jono("3 + + 5",self.muuttujat)
         self.assertEqual("Virheellinen syöte", tulos)
+
+    def test_kolme_eri_operaattoria_perakkain(self):
+        tulos = Validointi.lausekkeesta_jono("4-*+7",self.muuttujat)
+        self.assertEqual("Virheellinen syöte", tulos)
+
+    def test_miinukset_perakkain(self):
+        tulos = Validointi.lausekkeesta_jono("4 - -5",self.muuttujat)
+        self.assertEqual(deque(['4', '-', '-5']), tulos)
 
     def test_miinusmerkkinen_numero_alussa(self):
         tulos = Validointi.lausekkeesta_jono("-4*63-2",self.muuttujat)
@@ -56,6 +64,10 @@ class TestValidointi(unittest.TestCase):
 
     def test_virheellinen_syote_hylataan(self):
         tulos = Validointi.lausekkeesta_jono("5+BA",self.muuttujat)
+        self.assertEqual(tulos,"Virheellinen syöte")
+
+    def test_aivan_omituisia_merkkeja(self):
+        tulos = Validointi.lausekkeesta_jono("5+q",self.muuttujat)
         self.assertEqual(tulos,"Syötteessä on virheellisiä merkkejä, tarkista syöte")
 
     def test_numero_kesken_kun_muuttuja_syotetaan(self):
@@ -73,4 +85,15 @@ class TestValidointi(unittest.TestCase):
     def test_liian_suuri_juuri_hylataan(self):
         tulos = Validointi.lausekkeesta_jono("sq14(3)",self.muuttujat)
         self.assertEqual(tulos,"Virheellinen syöte")
- 
+
+    def test_juuressa_useammat_sulut(self):
+        tulos = Validointi.lausekkeesta_jono("sq5(2*(1+3)^2)",self.muuttujat)
+        self.assertEqual(tulos,deque(['(', '2', '*', '(', '1', '+', '3', ')', '^', '2', ')', '^', '(', '1', '/', '5', ')']))
+
+    def test_kahta_pilkkua_ei_saa_olla_perakkain(self):
+        tulos = Validointi.lausekkeesta_jono("4+,,5",self.muuttujat)
+        self.assertEqual(tulos,"Virheellinen syöte")
+
+    def test_jos_sulut_eivat_lopu_syotetta_ei_hyvaksyta(self):
+        tulos = Validointi.lausekkeesta_jono("3 + (4 + 5",self.muuttujat)
+        self.assertEqual(tulos,"Virheellinen syöte")

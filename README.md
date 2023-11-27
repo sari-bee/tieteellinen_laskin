@@ -13,6 +13,8 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin
 
 [Toteutusraportti](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/toteutusraportti.md)
 
+[Käyttöohje](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/kayttoohje.md)
+
 ## Viikkoraportit
 
 [Viikko 1](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko1.md)
@@ -22,6 +24,8 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin
 [Viikko 3](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko3.md)
 
 [Viikko 4](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko4.md)
+
+[Viikko 5](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko5.md)
 
 ## Asennus ja käynnistys
 

@@ -29,16 +29,19 @@ class Ui:
             print("Valitse vaihtoehdoista:")
             print("1 Laskin")
             print("2 Muunnos postfix-notaatioon")
-            print("3 Pikaohje")
-            print("4 Lopetus")
+            print("3 Lausekejoukon minimi- ja maksimiarvot")
+            print("4 Pikaohje")
+            print("5 Lopetus")
             syote = input("Valintasi: ")
             if syote == "1":
                 self.laske()
             elif syote == "2":
                 self.muunna()
             elif syote == "3":
-                self.ohje()
+                self.minmax()
             elif syote == "4":
+                self.ohje()
+            elif syote == "5":
                 self.lopeta()
             else:
                 print("-\nValinta virheellinen, kokeile uudestaan\n-")
@@ -57,7 +60,7 @@ class Ui:
                 tulos = Laskin.laske_tulos(syote, self.muuttujat)
                 if tulos:
                     print(syote + " = " + str(tulos) + "\n")
-                    t = input("\nTallenna tulos antamalla muuttuja A-Z (ohita painamalla enter)\n")
+                    t = input("Tallenna tulos antamalla muuttuja A-Z (ohita painamalla enter)\n")
                     if t in muutt:
                         self.muuttuja(t, tulos)
         self.valikko()
@@ -86,7 +89,7 @@ class Ui:
                 print(key + " = " + self.muuttujat[key])
 
     def muunna(self):
-        """Reverse Polish Notation -muunnoksen käyttöliittymä.
+        """Postfix-muunnoksen käyttöliittymä.
         """
 
         while True:
@@ -105,6 +108,27 @@ class Ui:
                     print(syote + " -> " + tulos + "\n")
         self.valikko()
 
+    def minmax(self):
+        """Tulostaa lausekejoukon suurimman ja pienimmän arvon antavat lausekkeet.
+        """
+        self.kaytossa_olevat_muuttujat()
+        lausekkeet = []
+        while True:
+            syote = input("\nAnna vertailtava lauseke tai katso tulos ja lopeta painamalla '!'\n")
+            if syote == "!":
+                tulos = Laskin.minimit_ja_maksimit(lausekkeet, self.muuttujat)
+                print("\n")
+                if not tulos:
+                    print("Ei vertailtavia arvoja")
+                else:
+                    print("Minimi:", tulos[0][0], "=", tulos[0][1])
+                    print("Maksimi:", tulos[1][0], "=", tulos[1][1])
+                print("\n")
+                break
+            if syote not in (" ", ""):
+                lausekkeet.append(syote)
+        self.valikko()
+
     def ohje(self):
         """Tulostaa komentoriville sovelluksen pikaohjeen.
         """
@@ -117,7 +141,12 @@ class Ui:
         print("jälkeen voit tallentaa tuloksen muuttujaan A-Z. Jos tallennat")
         print("arvon käytössä olevaan muuttujaan, vanha arvo korvautuu")
         print("uudella. Sovellus antaa virheilmoituksen, jos syöttämäsi")
-        print("lauseke ei kelpaa. Laajempi ohje dokumentaatiossa.")
+        print("lauseke ei kelpaa. Muunnos postfix-muotoon -toiminnossa")
+        print("voit tulostaa haluamasi infix-muotoisen lausekkeen postfix-")
+        print("muodossa. Lausekejoukon minimi- ja maksimiarvot -toiminto")
+        print("tulostaa syöttämiesi lausekkeiden joukosta suurimman ja")
+        print("pienimmän arvon antavat lausekkeet arvoineen. Voit käyttää")
+        print("myös määriteltyjä muuttujia. Laajempi ohje dokumentaatiossa.")
         print("* * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n")
 
     def lopeta(self):
