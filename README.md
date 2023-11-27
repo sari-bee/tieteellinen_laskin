@@ -32,8 +32,10 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin
 Asenna riippuvuudet komennolla
 
 ```bash
-poetry install
+poetry install --no-root
 ```
+
+(Joudut käyttämään -no-root, koska fiksuna ihmisenä kirjoitin projektini nimen alaviivalla ja nyt on liian myöhäistä korjata.)
 
 Käynnistä sovellus komennolla
 
