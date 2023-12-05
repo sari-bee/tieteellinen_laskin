@@ -107,8 +107,8 @@ class TestValidointi(unittest.TestCase):
         self.assertEqual(tulos,deque(['-0.9893582466233818','+','5']))
         tulos = Validointi.lausekkeesta_jono("cos(-8)+5",self.muuttujat)
         self.assertEqual(tulos,deque(['-0.14550003380861354','+','5']))
-        tulos = Validointi.lausekkeesta_jono("tan(-8)+5",self.muuttujat)
-        self.assertEqual(tulos,deque(['6.799711455220378','+','5']))
+        tulos = Validointi.lausekkeesta_jono("tan(-6)+5",self.muuttujat)
+        self.assertEqual(tulos,deque(['0.29100619138474915','+','5']))
 
     def test_piin_arvo_muunnetaan_oikein(self):
         tulos = Validointi.lausekkeesta_jono("pi * 2",self.muuttujat)
