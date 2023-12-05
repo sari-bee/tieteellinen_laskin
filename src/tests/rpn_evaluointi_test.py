@@ -29,4 +29,7 @@ class TestRPNEvaluointi(unittest.TestCase):
     def test_nollatulos(self):
         tulos = RPNEvaluointi.laske(deque(['5', '5', '-']))
         self.assertEqual(0, tulos)
+
+    def test_tulos_laskusta_palauttaa_false_vaaralla_operaattorilla(self):
+        self.assertFalse(RPNEvaluointi.tulos_laskusta("€",3,4))
         

@@ -27,6 +27,8 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehtävä tieteellinen laskin
 
 [Viikko 5](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko5.md)
 
+[Viikko 6](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/viikko6.md)
+
 ## Asennus ja käynnistys
 
 Asenna riippuvuudet komennolla

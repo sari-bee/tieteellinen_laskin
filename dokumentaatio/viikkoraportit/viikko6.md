@@ -1,0 +1,9 @@
+## Viikko 6
+
+Tällä viikolla olen toteuttanut sovellukseen mahdollisuuden käyttää trigonometrisia funktioita ja logaritmeja. Olen päivittänyt pikaohjeen ja käyttöohjeen vastaavasti. Olen täsmentänyt virheilmoituksia. Olen muokannut syötteen validointeja sekä syötettä testaavia yksikkötestejä. Olen jonkin verran refaktoroinut koodia. Olen tehnyt ensimmäisessä vertaisarvioinnissa toivottuja muutoksia, erityisesti täsmennyksiä muuttujien hallintaan. Olen tehnyt ja raportoinut käyttöliittymätestejä ja päivittänyt testausraporttia. Olen tehnyt toisen vertaisarvioinnin.
+
+Vertaisarvioinnin tekeminen oli taas opettavaista. Myös toisten opiskelijoiden vertaisarviointiraporttien lukeminen omasta ohjelmasta oli hyödyllistä. Sain tosi hyviä ehdotuksia muutoksiksi, joita vielä vähän jalostin omissa ajatuksissani. Viimeisten puuttuvien toiminnallisuuksien toteuttaminen oli opettavaista ja myös haastavaa. Käyttöliittymätestien tekeminen sai katsomaan omaa sovellusta hieman erilaisin silmin ja sen ansiosta muutinkin joitakin tekstejä selkeämmiksi. Viikon ilonaihe oli, että sain viimein Python-version 3.10 toimimaan omassa ympäristössäni ja sain näin ollen käyttöön match-statementit, joilla sain hieman refaktoroitua koodia.
+
+Loppupalautusta varten aion vielä miettiä kattavasti tarvittavat syötteen validoinnit ja laajennan niitä tarvittaessa. Täydennän tarpeen mukaan testausta. Refaktoroin ja kommentoin koodin mahdollisimman selkeäksi ja yhdenmukaiseksi. Huomioin loput vertaisarvioinnissa saadut kommentit. Viimeistelen dokumentaation. Teen sovelluksesta releasen githubiin. Pidän demon.
+
+Käytin työhön tällä viikolla aikaa 20 tuntia.

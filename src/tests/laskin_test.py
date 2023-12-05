@@ -47,3 +47,21 @@ class TestLaskin(unittest.TestCase):
 
     def test_minimit_ja_maksimit_antaa_virheen_jos_ei_tulosta(self):
         self.assertFalse(Laskin.minimit_ja_maksimit(["A", "4**6"], self.muuttujat))
+
+    def test_e_tunnistetaan_oikein(self):
+        tulos = Laskin.laske_tulos("1/9999999",self.muuttujat)
+        self.assertEqual(tulos, 1.00000010000001e-07)
+
+    def test_kaikkien_muuttujien_alustus(self):
+        Laskin.tallenna_muuttujaan("A", "35", self.muuttujat)
+        tulos = Laskin.tallenna_muuttujaan("B", "3", self.muuttujat)
+        self.assertEqual(tulos, {"A":"35", "B":"3"})
+        tulos = Laskin.kaikkien_muuttujien_alustus(self.muuttujat)
+        self.assertEqual(tulos,{})
+
+    def test_yhden_muuttujan_alustus(self):
+        Laskin.tallenna_muuttujaan("A", "35", self.muuttujat)
+        tulos = Laskin.tallenna_muuttujaan("B", "3", self.muuttujat)
+        self.assertEqual(tulos, {"A" : "35", "B" : "3"})
+        tulos = Laskin.yksittaisen_muuttujan_alustus("A", self.muuttujat)
+        self.assertEqual(tulos,{"B" : "3"})

@@ -25,10 +25,12 @@ class RPNEvaluointi:
                 eka = float(numeropino.pop())
                 toka = float(numeropino.pop())
                 tulos = RPNEvaluointi.tulos_laskusta(merkki, eka, toka)
-                if tulos:
+                if str(tulos) == "0.0":
                     numeropino.append(tulos)
-                else:
+                elif not tulos:
                     return False
+                else:
+                    numeropino.append(tulos)
             else:
                 numeropino.append(merkki)
         return numeropino.pop()
@@ -46,17 +48,19 @@ class RPNEvaluointi:
             Operaation tulos Float-muodossa tai False, jos operaatiossa jaetaan nollalla.
         """
 
-        if merkki == "+":
-            tulos = toka+eka
-        elif merkki == "-":
-            tulos = toka-eka
-        elif merkki == "*":
-            tulos = toka*eka
-        elif merkki == "^":
-            tulos = toka**eka
-        else:
-            if eka == 0:
-                print("Yrität jakaa nollalla, yritätkö räjäyttää maailmankaikkeuden?")
+        match merkki:
+            case "+":
+                return toka+eka
+            case "-":
+                return toka-eka
+            case "*":
+                return toka*eka
+            case "^":
+                return toka**eka
+            case "/":
+                if eka == 0:
+                    print("Yrität jakaa nollalla, yritätkö räjäyttää maailmankaikkeuden?")
+                    return False
+                return toka/eka
+            case _:
                 return False
-            tulos = toka/eka
-        return tulos

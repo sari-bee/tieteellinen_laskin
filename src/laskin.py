@@ -11,7 +11,7 @@ class Laskin:
         """Muuntaa infix-muotoisen lausekkeen postfix-muotoon.
 
         Args:
-            lauseke (Deque): Infix-muotoinen matemaattinen lauseke.
+            lauseke (String): Infix-muotoinen matemaattinen lauseke.
             muuttujat (Dictionary): Käytössä olevat muuttujat.
 
         Returns:
@@ -30,7 +30,7 @@ class Laskin:
         """Laskee annetun matemaattisen lausekkeen arvon.
 
         Args:
-            lauseke (Deque): Infix-muotoinen matemaattinen lauseke.
+            lauseke (String): Infix-muotoinen matemaattinen lauseke.
             muuttujat (Dictionary): Käytössä olevat muuttujat.
 
         Returns:
@@ -41,11 +41,11 @@ class Laskin:
         if not rpn:
             return False
         tulos = RPNEvaluointi.laske(rpn)
+        # Ilman tätä täsmennystä käyttöliittymä ei tulosta mitään tuloksen ollessa 0.0
+        if str(tulos) == "0.0":
+            return "0.0"
         if not tulos:
             return False
-        # Ilman tätä täsmennystä käyttöliittymä ei tulosta mitään tuloksen ollessa 0.0
-        if tulos == 0.0:
-            return "0.0"
         return tulos
 
     @classmethod
@@ -65,6 +65,35 @@ class Laskin:
         return muuttujat
 
     @classmethod
+    def kaikkien_muuttujien_alustus(cls, muuttujat):
+        """Alustaa kaikki muuttujat.
+
+        Args:
+            muuttujat (Dictionary): Käytössä olevat muuttujat.
+
+        Returns:
+            Alustettu muuttujien Dictionary.
+        """
+
+        muuttujat = {}
+        return muuttujat
+
+    @classmethod
+    def yksittaisen_muuttujan_alustus(cls, syote, muuttujat):
+        """Alustaa yksittäisen muuttujan.
+
+        Args:
+            syote (String): Muuttuja, joka halutaan alustaa.
+            muuttujat (Dictionary): Käytössä olevat muuttujat.
+
+        Returns:
+            Päivitetty muuttujien Dictionary.
+        """
+
+        del muuttujat[syote]
+        return muuttujat
+
+    @classmethod
     def minimit_ja_maksimit(cls, lausekkeet, muuttujat):
         """Laskee lausekejoukon minimi- ja maksimiarvot.
 
@@ -74,14 +103,15 @@ class Laskin:
         Returns:
             Tuple, jossa minimi- ja maksimiarvot.
         """
+
         arvot = []
         lausekearvoparit = {}
         i = 0
         while i < len(lausekkeet):
-            arvo = float(Laskin.laske_tulos(lausekkeet[i], muuttujat))
+            arvo = Laskin.laske_tulos(lausekkeet[i], muuttujat)
             if arvo:
-                lausekearvoparit[arvo] = lausekkeet[i]
-                arvot.append(arvo)
+                lausekearvoparit[float(arvo)] = lausekkeet[i]
+                arvot.append(float(arvo))
             i = i+1
         if len(arvot) == 0:
             return False

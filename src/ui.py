@@ -30,21 +30,25 @@ class Ui:
             print("1 Laskin")
             print("2 Muunnos postfix-notaatioon")
             print("3 Lausekejoukon minimi- ja maksimiarvot")
-            print("4 Pikaohje")
-            print("5 Lopetus")
+            print("4 Muuttujien alustus")
+            print("5 Pikaohje")
+            print("6 Lopetus")
             syote = input("Valintasi: ")
-            if syote == "1":
-                self.laske()
-            elif syote == "2":
-                self.muunna()
-            elif syote == "3":
-                self.minmax()
-            elif syote == "4":
-                self.ohje()
-            elif syote == "5":
-                self.lopeta()
-            else:
-                print("-\nValinta virheellinen, kokeile uudestaan\n-")
+            match syote:
+                case "1":
+                    self.laske()
+                case "2":
+                    self.muunna()
+                case "3":
+                    self.minmax()
+                case "4":
+                    self.muuttujien_alustus()
+                case "5":
+                    self.ohje()
+                case "6":
+                    self.lopeta()
+                case _:
+                    print("-\nValinta virheellinen, kokeile uudestaan\n-")
 
     def laske(self):
         """Laskimen käyttöliittymä.
@@ -52,17 +56,24 @@ class Ui:
 
         self.kaytossa_olevat_muuttujat()
         while True:
-            syote = input("\nAnna laskutoimitus tai palaa päävalikkoon painamalla !\n")
+            syote = input("\nAnna laskutoimitus tai palaa päävalikkoon painamalla '!'\n")
             if syote == "!":
                 print("\n")
                 break
             if syote not in (" ", ""):
-                tulos = Laskin.laske_tulos(syote, self.muuttujat)
+                tulos = Laskin.laske_tulos(syote.strip(), self.muuttujat)
                 if tulos:
-                    print(syote + " = " + str(tulos) + "\n")
+                    print(syote.strip() + " = " + str(tulos) + "\n")
                     t = input("Tallenna tulos antamalla muuttuja A-Z (ohita painamalla enter)\n")
                     if t in muutt:
-                        self.muuttuja(t, tulos)
+                        if t in self.muuttujat:
+                            syote = input("Muuttuja on varattu, korvaa nykyinen arvo painamalla '!' tai anna toinen muuttuja A-Z\n")
+                            if syote == "!":
+                                self.muuttuja(t, tulos)
+                            elif syote in muutt:
+                                self.muuttuja(syote, tulos)
+                        else:
+                            self.muuttuja(t, tulos)
         self.valikko()
 
     def muuttuja(self, muuttuja, tulos):
@@ -88,6 +99,31 @@ class Ui:
             for key in self.muuttujat:
                 print(key + " = " + self.muuttujat[key])
 
+    def muuttujien_alustus(self):
+        """Mahdollistaa muuttujien alustamisen.
+        """
+
+        while True:
+            self.kaytossa_olevat_muuttujat()
+            print("\n1 Kaikkien muuttujien alustus")
+            print("2 Yksittäisen muuttujan alustus")
+            valinta = input("\nValitse 1 tai 2 tai palaa päävalikkoon painamalla '!'\n")
+            match valinta:
+                case "!":
+                    break
+                case "1":
+                    syote = input("\nOlet alustamassa kaikki muuttujat. Vahvista valitsemalla K (ohita painamalla enter)\n")
+                    if syote in ("K", "k"):
+                        self.muuttujat = Laskin.kaikkien_muuttujien_alustus(self.muuttujat)
+                case "2":
+                    syote = input("\nAnna alustettava muuttuja A-Z (ohita painamalla enter)\n")
+                    if syote in self.muuttujat:
+                        self.muuttujat = Laskin.yksittaisen_muuttujan_alustus(syote, self.muuttujat)
+                case _:
+                    print("-\nValinta virheellinen, kokeile uudestaan\n-")
+        print("\n")
+        self.valikko()
+
     def muunna(self):
         """Postfix-muunnoksen käyttöliittymä.
         """
@@ -98,56 +134,64 @@ class Ui:
                 print("\n")
                 break
             if syote not in (" ", ""):
-                rpn = Laskin.muunna_rpn_muotoon(syote, self.muuttujat)
+                rpn = Laskin.muunna_rpn_muotoon(syote.strip(), self.muuttujat)
                 if rpn:
                     tulos = ""
                     i = 0
                     while i < len(rpn):
                         tulos = tulos + rpn[i] + " "
                         i = i+1
-                    print(syote + " -> " + tulos + "\n")
+                    print(syote.strip() + " -> " + tulos + "\n")
         self.valikko()
 
     def minmax(self):
         """Tulostaa lausekejoukon suurimman ja pienimmän arvon antavat lausekkeet.
         """
+
         self.kaytossa_olevat_muuttujat()
         lausekkeet = []
         while True:
+            if len(lausekkeet) > 0:
+                laus = "\nSyötetyt lausekkeet:"
+                for item in lausekkeet:
+                    laus = laus + "  " + item
+                print(laus)
             syote = input("\nAnna vertailtava lauseke tai katso tulos ja lopeta painamalla '!'\n")
             if syote == "!":
                 tulos = Laskin.minimit_ja_maksimit(lausekkeet, self.muuttujat)
-                print("\n")
                 if not tulos:
-                    print("Ei vertailtavia arvoja")
+                    print("\nEi vertailtavia arvoja\n")
                 else:
-                    print("Minimi:", tulos[0][0], "=", tulos[0][1])
-                    print("Maksimi:", tulos[1][0], "=", tulos[1][1])
-                print("\n")
+                    print("\nMinimi:", tulos[0][0], "=", tulos[0][1])
+                    print("Maksimi:", tulos[1][0], "=", tulos[1][1], "\n")
                 break
             if syote not in (" ", ""):
-                lausekkeet.append(syote)
+                lausekkeet.append(syote.strip())
         self.valikko()
 
     def ohje(self):
         """Tulostaa komentoriville sovelluksen pikaohjeen.
         """
 
-        print("\n* * * * * * * * * * * * Pikaohje * * * * * * * * * * * *")
-        print("Sallitut operaattorit ja merkit: +, -, *, x, /, %, ^, (),")
-        print("negatiiviset ja positiiviset kokonais- ja desimaaliluvut,")
-        print("desimaalierottimena piste tai pilkku, neliöjuuri sq(x) tai")
-        print("sqrt(x), y:s (y = 3-9) juuri sqy(x) tai sqrty(x). Laskun")
-        print("jälkeen voit tallentaa tuloksen muuttujaan A-Z. Jos tallennat")
-        print("arvon käytössä olevaan muuttujaan, vanha arvo korvautuu")
-        print("uudella. Sovellus antaa virheilmoituksen, jos syöttämäsi")
-        print("lauseke ei kelpaa. Muunnos postfix-muotoon -toiminnossa")
-        print("voit tulostaa haluamasi infix-muotoisen lausekkeen postfix-")
-        print("muodossa. Lausekejoukon minimi- ja maksimiarvot -toiminto")
-        print("tulostaa syöttämiesi lausekkeiden joukosta suurimman ja")
-        print("pienimmän arvon antavat lausekkeet arvoineen. Voit käyttää")
-        print("myös määriteltyjä muuttujia. Laajempi ohje dokumentaatiossa.")
-        print("* * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n")
+        print("\n* * * * * * * * * * * * * Pikaohje * * * * * * * * * * * * *")
+        print("\nSallitut operaattorit, merkit ja funktiot:")
+        print("+, -, *, x, /, %, ^, (), negatiiviset ja positiiviset kokonais-")
+        print("ja desimaaliluvut, desimaalierottimena piste tai pilkku. Neliöjuuri")
+        print("sqrt(x), y:s (y = 2-9) juuri sqrty(x). Trigonometriset funktiot")
+        print("sin(x), cos(x) ja tan(x) sekä pi. Logaritmit log(x), ln(x) ja")
+        print("logy(x), missä y = 2-9.")
+        print("\nLaskun jälkeen voit tallentaa tuloksen muuttujaan A-Z. Muuttujia")
+        print("voi käyttää laskuissa. Päävalikosta voit alustaa muuttujat.")
+        print("\nSovellus antaa virheilmoituksen, jos lauseke ei kelpaa. Logaritmien")
+        print("ja trigonometristen funktioiden sisällä voi olla vain yksittäisiä lukuja")
+        print("tai muuttujia, tallenna tarvittaessa ensin lausekkeen arvo muuttujaan.")
+        print("\nMuunnos postfix-muotoon -toiminto:")
+        print("Tulostaa syöttämäsi infix-muotoisen lausekkeen postfix-muodossa.")
+        print("\nLausekejoukon minimi- ja maksimiarvot -toiminto:")
+        print("Tulostaa syöttämiesi lausekkeiden joukosta suurimman ja pienimmän")
+        print("arvon antavat lausekkeet arvoineen.")
+        print("\nLaajempi ohje dokumentaatiossa.\n")
+        print("* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\n")
 
     def lopeta(self):
         """Lopettaa ohjelman suorituksen.
