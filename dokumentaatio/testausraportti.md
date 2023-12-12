@@ -11,9 +11,7 @@ Automaattisia testejä on 65 kappaletta. Testien haarautumakattavuus on 99%.
 
 ![Testikattavuus](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/testikattavuus_final.jpg)
 
-Tavoitteena on 100% testauksen kokonaiskattavuus testattavien luokkien osalta ja lisäksi testien tulee testata toiminnallisuuksia mielekkäällä tavalla. Muutamat koodirivit jäävät automaattitestien ulkopuolelle. Niiden määrittelemät toiminnallisuudet on testattu mahdollisuuksien mukaan manuaalisesti.
-
-Coverage-työkalu ei jostain syystä tunnista muutamaa Validointi-luokan koodiriviä katetuksi, vaikka testit todellisuudessa kattavat ko. toiminnallisuuden. Lisäksi koodissa on yksittäisiä oletusvirheilmoituksia, joita ei käytännössä koskaan sovelluksen suorituksen aikana kohdata.
+Tavoitteena on 100% testauksen kokonaiskattavuus testattavien luokkien osalta ja lisäksi testien tulee testata toiminnallisuuksia mielekkäällä tavalla. Muutamat koodirivit jäävät automaattitestien ulkopuolelle. Niiden määrittelemät toiminnallisuudet on testattu vielä manuaalisesti. Coverage-työkalu ei jostain syystä tunnista muutamaa Validointi-luokan koodiriviä katetuksi, vaikka testit todellisuudessa kattavat ko. toiminnallisuuden.
 
 ## Käyttöliittymätestaus
 
