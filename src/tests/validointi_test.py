@@ -25,8 +25,6 @@ class TestValidointi(unittest.TestCase):
     def test_operaattorit_perakkain(self):
         tulos = Validointi.lausekkeesta_jono("3 + + 5",self.muuttujat)
         self.assertEqual("Virheellisiä merkkejä peräkkäin tai sulut eivät täsmää, tarkista syöte", tulos)
-
-    def test_kolme_eri_operaattoria_perakkain(self):
         tulos = Validointi.lausekkeesta_jono("4-*+7",self.muuttujat)
         self.assertEqual("Virheellisiä merkkejä peräkkäin tai sulut eivät täsmää, tarkista syöte", tulos)
 
@@ -57,8 +55,6 @@ class TestValidointi(unittest.TestCase):
     def test_muuttuja_muutetaan_arvoksi1(self):
         tulos = Validointi.lausekkeesta_jono("3 + A",self.muuttujat)
         self.assertEqual(deque(['3','+','35']), tulos)
-
-    def test_muuttuja_muutetaan_arvoksi2(self):
         tulos = Validointi.lausekkeesta_jono("5/B+9",self.muuttujat)
         self.assertEqual(deque(['5','/','3','+','9']), tulos)
 
@@ -127,7 +123,7 @@ class TestValidointi(unittest.TestCase):
         self.assertEqual(tulos, "Trigonometrisessa funktiossa tai logaritmissa virhe, tarkista syöte")
 
     def test_kymmenkantainen_logaritmi_lasketaan_oikein(self):
-        tulos = Validointi.lausekkeesta_jono("log(3)",self.muuttujat)
+        tulos = Validointi.lausekkeesta_jono("log( 3 )",self.muuttujat)
         self.assertEqual(tulos,deque(['0.47712125471966244']))
 
     def test_luonnollinen_logaritmi_lasketaan_oikein(self):
@@ -147,15 +143,47 @@ class TestValidointi(unittest.TestCase):
         self.assertEqual(tulos, "Trigonometrisessa funktiossa tai logaritmissa virhe, tarkista syöte")
 
     def test_lauseke_logaritmin_sisalla_tuottaa_virheen(self):
-        tulos = Validointi.lausekkeesta_jono("log2(5+6)",self.muuttujat)
+        tulos = Validointi.lausekkeesta_jono("log2(5 + 6)",self.muuttujat)
         self.assertEqual(tulos, "Trigonometrisessa funktiossa tai logaritmissa virhe, tarkista syöte")
 
     def test_exp_tunnistetaan_oikein(self):
         tulos = Validointi.lausekkeesta_jono("3.6e-3*2",self.muuttujat)
         self.assertEqual(tulos,deque(['3.6e-3','*','2']))
+        tulos = Validointi.lausekkeesta_jono("3.6e+3*2",self.muuttujat)
+        self.assertEqual(tulos,deque(['3.6e+3','*','2']))
+        tulos = Validointi.lausekkeesta_jono("3.6e3*2",self.muuttujat)
+        self.assertEqual(tulos,deque(['3.6e3','*','2']))
+
+    def test_expin_jalkeen_vain_plus_tai_miinus(self):
+        tulos = Validointi.lausekkeesta_jono("3.6e*3*2",self.muuttujat)
+        self.assertEqual(tulos,"Syötteessä on virheellisiä merkkejä, tarkista syöte")
+        tulos = Validointi.lausekkeesta_jono("3.6e/3*2",self.muuttujat)
+        self.assertEqual(tulos,"Syötteessä on virheellisiä merkkejä, tarkista syöte")
 
     def test_tulee_virheilmoitus_jos_funktiossa_sulut_auki(self):
         tulos = Validointi.lausekkeesta_jono("sin(4356",self.muuttujat)
         self.assertEqual(tulos,"Trigonometrisessa funktiossa tai logaritmissa virhe, tarkista syöte")
         tulos = Validointi.lausekkeesta_jono("sq4(4356",self.muuttujat)
         self.assertEqual(tulos,"Juurifunktiossa virhe, tarkista syöte")
+
+    def test_yleinen_virheilmoitus_jos_ei_virhekoodia(self):
+        tulos = Validointi.virheet(0)
+        self.assertEqual(tulos,"Virheellinen syöte")
+
+    def test_exp_funktion_sisalla(self):
+        tulos = Validointi.lausekkeesta_jono("sq(4e-3)",self.muuttujat)
+        self.assertEqual(tulos,deque(['(', '4e-3', ')', '^', '(', '1', '/', '2', ')']))
+        tulos = Validointi.lausekkeesta_jono("ln(4e-3)",self.muuttujat)
+        self.assertEqual(tulos,deque(["-5.521460917862246"]))
+
+    def test_keskenerainen_exp_funktion_sisalla_antaa_virheen(self):
+        tulos = Validointi.lausekkeesta_jono("sq4(e)",self.muuttujat)
+        self.assertEqual(tulos,"Syötteessä on virheellisiä merkkejä, tarkista syöte")
+        tulos = Validointi.lausekkeesta_jono("ln(4e)",self.muuttujat)
+        self.assertEqual(tulos,"Trigonometrisessa funktiossa tai logaritmissa virhe, tarkista syöte")
+
+    def test_rikkinainen_lauseke_sulkujen_sisalla(self):
+        tulos = Validointi.lausekkeesta_jono("(4-7+)",self.muuttujat)
+        self.assertEqual(tulos, "Virheellisiä merkkejä peräkkäin tai sulut eivät täsmää, tarkista syöte")
+        tulos = Validointi.lausekkeesta_jono("(+4+3)",self.muuttujat)
+        self.assertEqual(tulos, "Virheellisiä merkkejä peräkkäin tai sulut eivät täsmää, tarkista syöte")

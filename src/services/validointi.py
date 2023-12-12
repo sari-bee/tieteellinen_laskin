@@ -2,12 +2,10 @@ from collections import deque
 import math
 
 # Miinus voi kuulua sekä numeroon että olla operaattori joten se käsitellään erikoistapauksena.
-sallitut = ["0","1","2","3","4","5","6","7","8","9",".",",","+","-","x","*",
-                "%","/","(",")"," ","^","e"]
-numerot = ["0","1","2","3","4","5","6","7","8","9",".",",","e"]
-oper = ["+","x","*","%","/","^"]
-muutt = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+sallitut = set("0123456789.,+-x*%/() e^")
+numerot = set("0123456789.,e")
+oper = set("+x*%/^")
+muutt = set("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 class Validointi:
     """Luokka tarkistaa syötteen muodon asianmukaisuuden ja muuntaa sen Deque-muotoon.
@@ -66,10 +64,16 @@ class Validointi:
                 elif lauseke[i] in numerot:
                     numero = numero + lauseke[i]
                 else:
-                    if len(numero) != 0:
-                        lausekejono.append(numero)
-                        numero = ""
-                    lausekejono.append(lauseke[i])
+                    if edellinen == "e":
+                        if lauseke[i] == "+":
+                            numero = numero+lauseke[i]
+                        else:
+                            return Validointi.virheet(2)
+                    else:
+                        if len(numero) != 0:
+                            lausekejono.append(numero)
+                            numero = ""
+                        lausekejono.append(lauseke[i])
                 edellinen = lauseke[i]
             i = i+1
         if len(numero) != 0:
@@ -87,9 +91,9 @@ class Validointi:
             True jos virheellisiä merkkejä ei löydetä; False muuten.
         """
 
-        if lauseke[0] in oper or lauseke[0] == ")":
+        if lauseke[0] in oper or lauseke[0] in (")", "e"):
             return False
-        if lauseke[-1] in oper or lauseke[-1] in ("(", ".", ",","-","s","n","c","t","l"):
+        if lauseke[-1] in oper or lauseke[-1] in ("(", ".", ",","-","s","n","c","t","l","e"):
             return False
         if lauseke[0] == "-" and lauseke[1] not in numerot:
             return False
@@ -107,7 +111,7 @@ class Validointi:
         """
 
         edellinen = l[0]
-        vali = False
+        valilyonti = False
         if l[0] == "(":
             sulkuja_auki = 1
         else:
@@ -115,11 +119,15 @@ class Validointi:
         i = 1
         while i < len(l):
             if l[i] == " ":
-                vali = True
+                valilyonti = True
             else:
                 if l[i] == "(" and edellinen in numerot:
                     return False
-                if l[i] in numerot and (edellinen in numerot and vali):
+                if l[i] == ")" and edellinen in oper:
+                    return False
+                if l[i] in oper and edellinen == "(":
+                    return False
+                if l[i] in numerot and (edellinen in numerot and valilyonti):
                     return False
                 if l[i] in oper and (edellinen in oper or edellinen == "-"):
                     return False
@@ -132,7 +140,7 @@ class Validointi:
                 if l[i] == ")":
                     sulkuja_auki = sulkuja_auki - 1
                 edellinen = l[i]
-                vali = False
+                valilyonti = False
             i = i+1
         if sulkuja_auki != 0:
             return False
@@ -250,25 +258,35 @@ class Validointi:
                         return False
                 i = i+2
                 numero = ""
+                if lauseke[i] == " ":
+                    i = i+1
+                    vanha = vanha + lauseke[i]
                 if lauseke[i] == "-":
                     numero = "-"
                     i = i+1
                     vanha = vanha + lauseke[i]
-                if lauseke[i] not in numerot:
+                if lauseke[i] == "e" or lauseke[i] not in numerot:
                     return False
                 numero = numero + lauseke[i]
                 while True:
+                    if i == len(lauseke)-1:
+                        return False
                     i = i+1
                     vanha = vanha + lauseke[i]
                     if lauseke[i] == ")":
+                        if lauseke[i-1] == "e":
+                            return False
                         break
-                    if lauseke[i] == "-" and lauseke[i-1] != "e":
+                    if lauseke[i] in ("-", "+") and lauseke[i-1] != "e":
                         return False
-                    if lauseke[i] not in numerot:
+                    if lauseke[i] == " " and i < len(lauseke)-1:
+                        if lauseke[i+1] == ")":
+                            vanha = vanha + ")"
+                            break
+                        return False
+                    if lauseke[i] not in numerot and lauseke[i] not in ("+","-"):
                         return False
                     numero = numero + lauseke[i]
-                    if i == len(lauseke)-1:
-                        return False
                 match operaatio:
                     case "n":
                         lauseke = lauseke.replace(vanha, str(math.sin(float(numero.strip()))))

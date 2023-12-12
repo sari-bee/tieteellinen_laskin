@@ -1,8 +1,7 @@
 import sys
 from laskin import Laskin
 
-muutt = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+muutt = set("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
 
 class Ui:
     """Luokka, joka tuottaa käyttöliittymän ja sovellusvalikon.
@@ -64,14 +63,15 @@ class Ui:
                 tulos = Laskin.laske_tulos(syote.strip(), self.muuttujat)
                 if tulos:
                     print(syote.strip() + " = " + str(tulos) + "\n")
-                    t = input("Tallenna tulos antamalla muuttuja A-Z (ohita painamalla enter)\n")
-                    if t in muutt:
+                    while True:
+                        t = input("Tallenna tulos antamalla muuttuja A-Z (ohita painamalla enter)\n")
+                        if t not in muutt:
+                            break
                         if t in self.muuttujat:
-                            syote = input("Muuttuja on varattu, korvaa nykyinen arvo painamalla '!' tai anna toinen muuttuja A-Z\n")
+                            syote = input("Muuttuja on varattu, korvaa nykyinen painamalla '!' (ohita painamalla enter)\n")
                             if syote == "!":
                                 self.muuttuja(t, tulos)
-                            elif syote in muutt:
-                                self.muuttuja(syote, tulos)
+                                break
                         else:
                             self.muuttuja(t, tulos)
         self.valikko()
@@ -112,11 +112,11 @@ class Ui:
                 case "!":
                     break
                 case "1":
-                    syote = input("\nOlet alustamassa kaikki muuttujat. Vahvista valitsemalla K (ohita painamalla enter)\n")
+                    syote = input("\nOlet alustamassa kaikki muuttujat. Vahvista valitsemalla K (ohita enterillä)\n")
                     if syote in ("K", "k"):
                         self.muuttujat = Laskin.kaikkien_muuttujien_alustus(self.muuttujat)
                 case "2":
-                    syote = input("\nAnna alustettava muuttuja A-Z (ohita painamalla enter)\n")
+                    syote = input("\nAnna alustettava muuttuja A-Z (ohita enterillä)\n")
                     if syote in self.muuttujat:
                         self.muuttujat = Laskin.yksittaisen_muuttujan_alustus(syote, self.muuttujat)
                 case _:

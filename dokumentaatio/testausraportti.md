@@ -1,5 +1,5 @@
 # Testausraportti
-5.12.2023
+12.12.2023
 
 ## Yksikkötestaus
 
@@ -7,11 +7,13 @@ Yksikkötestauksessa käytetään Unittest-kehystä. Automaattisilla testeillä 
 
 ### Testikattavuus
 
-Automaattisia testejä on 61 kappaletta. Testien haarautumakattavuus on 99%.
+Automaattisia testejä on 65 kappaletta. Testien haarautumakattavuus on 99%.
 
-![Testikattavuus](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/testikattavuus_vko6.jpg)
+![Testikattavuus](https://github.com/sari-bee/tieteellinen_laskin/blob/main/dokumentaatio/viikkoraportit/testikattavuus_final.jpg)
 
-Tavoitteena on 100% testauksen kokonaiskattavuus testattavien luokkien osalta ja lisäksi testien tulee testata toiminnallisuuksia mielekkäällä tavalla. Muutamat koodirivit jäävät automaattitestien ulkopuolelle, lähinnä siksi että ne koskevat täydellisyyden vuoksi reunatapauksia joita ei käytännössä ohjelman suorituksen aikana kohdata. Niiden määrittelemät toiminnallisuudet on testattu mahdollisuuksien mukaan manuaalisesti.
+Tavoitteena on 100% testauksen kokonaiskattavuus testattavien luokkien osalta ja lisäksi testien tulee testata toiminnallisuuksia mielekkäällä tavalla. Muutamat koodirivit jäävät automaattitestien ulkopuolelle. Niiden määrittelemät toiminnallisuudet on testattu mahdollisuuksien mukaan manuaalisesti.
+
+Coverage-työkalu ei jostain syystä tunnista muutamaa Validointi-luokan koodiriviä katetuksi, vaikka testit todellisuudessa kattavat ko. toiminnallisuuden. Lisäksi koodissa on yksittäisiä oletusvirheilmoituksia, joita ei käytännössä koskaan sovelluksen suorituksen aikana kohdata.
 
 ## Käyttöliittymätestaus
 
@@ -67,4 +69,4 @@ Testitapausten perusteella sovellus toimii luotettavasti ja käyttäjäystäväl
 
 ## Muu testaus
 
-Laskimen käyttämät tietorakenneoperaatiot toimivat aikavaativuudella O(1). Pääosa validoinneissa käytettävistä operaatioista toimii aikavaativuudella O(n), missä n on syötteen koko. Huomioiden toteutuvat aikavaativuudet ja sen, etteivät sovellukselle annettavat syötteet ole tyypillisesti kovin suuria ei suorituskykytestaus ole tämän sovelluksen kontekstissa merkityksellistä. Myöskään vertailua muihin ratkaisuihin ei tehdä. Merkittävin testattava asia on sovelluksen reagointi mielekkäällä tavalla kaikenlaisiin, sekä oikeisiin että virheellisiin syötteisiin; erityisesti sovellus ei saa antaa virheellistä tulosta eikä oikeannäköistä tulosta virheellisellä syötteellä.
+Laskimen käyttämät tietorakenneoperaatiot toimivat aikavaativuudella O(1). Pääosa validoinneissa käytettävistä operaatioista toimii aikavaativuudella O(n), missä n on syötteen koko. Huomioiden toteutuvat aikavaativuudet ja sen, etteivät sovellukselle annettavat syötteet ole tyypillisesti kovin suuria ei suorituskykytestaus ole tämän sovelluksen kontekstissa merkityksellistä. Myöskään vertailua muihin ratkaisuihin ei tehdä. Merkittävin testattava, yllä kuvattu asia on sovelluksen reagointi mielekkäällä tavalla kaikenlaisiin, sekä oikeisiin että virheellisiin syötteisiin; erityisesti sovellus ei saa antaa virheellistä tulosta eikä oikeannäköistä tulosta virheellisellä syötteellä.

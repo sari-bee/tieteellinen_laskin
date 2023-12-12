@@ -53,7 +53,7 @@ Sovellus antaa virheilmoituksen, jos syötät virheellisen lausekkeen. Takaisin 
 
 ### Muunnos postfix-notaatioon
 
-Syötä infix-muotoinen matemaattinen lauseke. Sovellus palauttaa lausekkeen postfix-muodossa (käänteisessä puolalaisessa notaatiossa, RPN). Mahdolliset muuttujat korvataan niiden arvoilla. Huomioi, että kaikkien operaattorien tulee olla eksplisiittisesti kirjoitettu lausekkeeseen (esim. älä kirjoita '3A', missä A on muuttuja, vaan '3*A').
+Syötä infix-muotoinen matemaattinen lauseke. Sovellus palauttaa lausekkeen postfix-muodossa (käänteisessä puolalaisessa notaatiossa, RPN). Mahdolliset muuttujat sekä trigonometriset funktiot ja logaritmit korvataan niiden arvoilla. Huomioi, että kaikkien operaattorien tulee olla eksplisiittisesti kirjoitettu lausekkeeseen (esim. älä kirjoita '3A', missä A on muuttuja, vaan '3*A').
 
 Sovellus antaa virheilmoituksen, jos syötät virheellisen lausekkeen. Takaisin päävalikkoon pääset syöttämällä '!'.
 

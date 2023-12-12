@@ -6,17 +6,13 @@ class TestLaskin(unittest.TestCase):
     def setUp(self):
         self.muuttujat = {}
 
-    def test_peruslausekkeen_oikea_tulos(self):
+    def test_peruslausekkeen_ja_sulkujen_oikea_tulos(self):
         tulos = Laskin.laske_tulos("3+5*(1-3^2)", self.muuttujat)
         self.assertEqual(-37.0, tulos)
 
     def test_neliojuuri_lasketaan_oikein(self):
         tulos = Laskin.laske_tulos("s(64)/2", self.muuttujat)
         self.assertEqual(4, tulos)
-
-    def test_sulkujen_sisalla_oleva_lauseke_oikein(self):
-        tulos = Laskin.laske_tulos("5*(1+2*4)", self.muuttujat)
-        self.assertEqual(45, tulos)
 
     def test_useammat_sulut_ymmarretaan_oikein(self):
         tulos = Laskin.laske_tulos("2*(1+2*(1+3*(3-1)))",self.muuttujat)
@@ -65,3 +61,10 @@ class TestLaskin(unittest.TestCase):
         self.assertEqual(tulos, {"A" : "35", "B" : "3"})
         tulos = Laskin.yksittaisen_muuttujan_alustus("A", self.muuttujat)
         self.assertEqual(tulos,{"B" : "3"})
+
+    def test_tulos_nolla_palautetaan_oikein(self):
+        tulos = Laskin.laske_tulos("0*4", self.muuttujat)
+        self.assertEqual(tulos, "0.0")
+
+    def test_overflow_error(self):
+        self.assertFalse(Laskin.laske_tulos("44^999", self.muuttujat))

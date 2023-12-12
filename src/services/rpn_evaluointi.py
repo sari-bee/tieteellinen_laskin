@@ -1,6 +1,6 @@
 from collections import deque
 
-operaattorit = ["+","-","*","/","^"]
+operaattorit = set("+-*/^")
 
 class RPNEvaluointi:
     """Luokan funktiot laskevat matemaattisen lausekkeen arvon.
@@ -22,8 +22,12 @@ class RPNEvaluointi:
         while len(rpn) > 0:
             merkki = rpn.popleft()
             if merkki in operaattorit:
-                eka = float(numeropino.pop())
-                toka = float(numeropino.pop())
+                try:
+                    eka = float(numeropino.pop())
+                    toka = float(numeropino.pop())
+                except ValueError:
+                    print("Virheellinen syöte")
+                    return False
                 tulos = RPNEvaluointi.tulos_laskusta(merkki, eka, toka)
                 if str(tulos) == "0.0":
                     numeropino.append(tulos)
@@ -45,22 +49,25 @@ class RPNEvaluointi:
             toka (Float): Toinen lukuarvo.
 
         Returns:
-            Operaation tulos Float-muodossa tai False, jos operaatiossa jaetaan nollalla.
+            Operaation tulos Float-muodossa tai virheviesti, jos operaatio ei onnistu.
         """
-
-        match merkki:
-            case "+":
-                return toka+eka
-            case "-":
-                return toka-eka
-            case "*":
-                return toka*eka
-            case "^":
-                return toka**eka
-            case "/":
-                if eka == 0:
-                    print("Yrität jakaa nollalla, yritätkö räjäyttää maailmankaikkeuden?")
+        try:
+            match merkki:
+                case "+":
+                    return toka+eka
+                case "-":
+                    return toka-eka
+                case "*":
+                    return toka*eka
+                case "^":
+                    return toka**eka
+                case "/":
+                    return toka/eka
+                case _:
                     return False
-                return toka/eka
-            case _:
-                return False
+        except OverflowError:
+            print("Tulos tai osatulos liian suuri, ylivuoto")
+            return False
+        except ZeroDivisionError:
+            print("Yrität jakaa nollalla, yritätkö räjäyttää maailmankaikkeuden?")
+            return False

@@ -10,7 +10,7 @@ Sovelluksen käynnistyessä alustetaan muuttujien hallintaan käytettävä dicti
 
 ## Aikavaativuudet ja suorituskyky
 
-Pino- ja jono-operaatiot toimivat aikavaativuudella O(1). Validoinnit perustuvat pääosin syötteen läpikäyntiin ja toimivat aikavaativuudella O(n), missä n on syötteen koko. Muuttujanhallinnassa käytettävän dictionary-tietorakenteen operaatiot toimivat aikavaativuudella O(1). Koska laskimelle annettavien syötteiden koko ei ole kovin suuri ja koska operaatioiden aikavaativuudet ovat maltillisia, ei algoritmin tehokkuus tässä tapauksessa ole kriittistä toiminnan kannalta eikä sitä ole analysoitu tätä laajemmin.
+Pino- ja jono-operaatiot toimivat aikavaativuudella O(1). Koko shunting-yard-algoritmi ja RPN-muotoisen lausekkeen evaluointi toimivat aikavaativuudella O(n), missä n on syötteen koko. Validoinnit perustuvat pääosin syötteen läpikäyntiin ja toimivat kukin aikavaativuudella O(n), missä n on syötteen koko. Muuttujanhallinnassa käytettävän dictionary-tietorakenteen operaatiot toimivat aikavaativuudella O(1). Koska laskimelle annettavien syötteiden koko ei ole kovin suuri ja koska operaatioiden aikavaativuudet ovat maltillisia, ei algoritmin tehokkuus tässä tapauksessa ole kriittistä toiminnan kannalta eikä sitä ole analysoitu tätä laajemmin.
 
 ## Käytettävyys ja syötteiden validointi
 
@@ -20,7 +20,7 @@ Sovellusta käytetään komentoriviltä ohjaavan valikon avulla. Sovelluksessa o
 
 Laskimelle olisi voinut rakentaa myös graafisen käyttöliittymän. En halunnut tehdä sitä sillä ajatuksella, että komentorivisovellukselle on helpompi tuoda jokin valmis lauseke esimerkiksi copy-paste-toiminnolla, jolloin laskimen käyttö on joustavampaa. Toisaalta komentorivisovelluksen käyttö tarkoittaa, että syötteen validoinnin tulee olla huomattavasti laajempaa, koska käyttäjä voi antaa syötteeksi mitä vain. Se, olisiko laskimen käyttö graafisella käyttöliittymällä miellyttävämpää on ehkä osin makuasiakin.
 
-Koodin rakenteessa suurin ongelma on, että funktiot ovat pitkiä. En alun alkaen suunnitellut koodia riittävän huolellisesti, jolloin refaktorointi riittävän pieniksi funktioiksi osoittautui yllättävän hankalaksi. Tästä syystä mm. Pylint-analyysissä koodin laatu jää hieman alle tavoitteen, vaikka käytän suhteellisen liberaaleja Pylint-määrittelyjä.
+Koodin rakenteessa suurin ongelma on, että funktiot ovat pitkiä. En alun alkaen suunnitellut koodia riittävän huolellisesti, jolloin refaktorointi riittävän pieniksi funktioiksi osoittautui yllättävän hankalaksi. Tästä syystä mm. Pylint-analyysissä koodin laatu jää hieman alle tavoitteen, vaikka käytän suhteellisen liberaaleja Pylint-määrittelyjä. Tästä syystä myöskään syötteen validoinnit eivät ole kaikin osin loogisia kokonaisuuksia, ja jos aloittaisin työn nyt, suunnittelisin kokonaisuuden hieman eri tavalla.
 
 Toteutin trigonometristen funktioiden ja logaritmien käsittelyn vain rajatuissa tapauksissa (ei mahdollisuutta käyttää suoraan lausekkeita funktioiden sisällä), koska työn aikataulu ei antanut myöten. Käyttäjälle on hieman hankalaa joutua ensin tallentamaan lausekkeen arvo muuttujaan ja sitten vasta laskea funktion arvo, joten tämä olisi selkeä jatkokehitysehdotus.
 

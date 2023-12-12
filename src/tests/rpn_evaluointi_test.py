@@ -14,10 +14,6 @@ class TestRPNEvaluointi(unittest.TestCase):
         tulos = RPNEvaluointi.laske(deque(['7.5', '3', '5', '*', '/']))
         self.assertEqual(0.5, tulos)
 
-    def test_potenssi(self):
-        tulos = RPNEvaluointi.laske(deque(['3', '2', '^']))
-        self.assertEqual(9, tulos)
-
     def test_potenssi_ja_muuta(self):
         tulos = RPNEvaluointi.laske(deque(['3', '5', '2', '^', '2', '*', '+']))
         self.assertEqual(53, tulos)
@@ -32,4 +28,6 @@ class TestRPNEvaluointi(unittest.TestCase):
 
     def test_tulos_laskusta_palauttaa_false_vaaralla_operaattorilla(self):
         self.assertFalse(RPNEvaluointi.tulos_laskusta("€",3,4))
-        
+
+    def test_value_error_tunnistetaan(self):
+        self.assertFalse(RPNEvaluointi.laske(deque(['a','+','3'])))
