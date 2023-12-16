@@ -31,6 +31,8 @@ Tämä on Algoritmit ja tekoäly -harjoitustyönä tehty tieteellinen laskin.
 
 ## Asennus ja käynnistys
 
+[Release](https://github.com/sari-bee/tieteellinen_laskin/releases)
+
 Asenna riippuvuudet komennolla
 
 ```bash

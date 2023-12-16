@@ -2,7 +2,7 @@
 
 ## Lataaminen
 
-Tällä hetkellä voit ladata viimeisimmän version lähdekoodin kloonaamalla projektin. Jatkossa projektista tehdään myös Github-release.
+Lataa projekti [Github-releasena](https://github.com/sari-bee/tieteellinen_laskin/releases)
 
 ## Asennus ja käynnistys
 
